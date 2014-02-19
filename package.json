@@ -1,0 +1,19 @@
+{
+	"name"    : "x-common",
+	"version" : "0.0.1",
+	"license" : "MIT",
+	"description" : "utilities used by x-x.io x-components",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/x-component/x-common.git"
+	},
+	"devDependencies":{
+		"vows"    : "~0.7",
+		"markdox" : "~0.1"
+	},
+	"main" : "common.js",
+	"scripts": {
+		"prepublish" : "markdox -o ./README.md ./common.js",
+		"test"       : "vows ./test/*.test.js"
+	}
+}

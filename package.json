@@ -1,25 +1,25 @@
 {
-	"name"    : "x-common",
-	"version" : "0.0.1",
-	"license" : "MIT",
-	"description" : "utilities used by x-x.io x-components",
-	"keywords": [
-		"x-x",
-		"x-component",
-		"merge",
-		"extend"
-	],
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/x-component/x-common.git"
-	},
-	"devDependencies":{
-		"vows"    : "~0.7",
-		"dox-basic": "~0.0"
-	},
-	"main" : "common.js",
-	"scripts": {
-		"prepublish": "cat ./common.js | node ./node_modules/dox-basic/bin/dox-basic -m -t \"[![Build Status](https://travis-ci.org/x-component/$npm_package_name.png?v$npm_package_version)](https://travis-ci.org/x-component/$npm_package_name)\" > README.md",
-		"test"       : "vows ./test/*.test.js"
-	}
+  "name": "x-common",
+  "version": "0.0.2",
+  "license": "MIT",
+  "description": "utilities used by x-x.io x-components",
+  "keywords": [
+    "x-x",
+    "x-component",
+    "merge",
+    "extend"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/x-component/x-common.git"
+  },
+  "devDependencies": {
+    "vows": "~0.7",
+    "dox-basic": "~0.0"
+  },
+  "main": "common.js",
+  "scripts": {
+    "prepublish": "cat ./common.js | node ./node_modules/dox-basic/bin/dox-basic -m -t \"[![Build Status](https://travis-ci.org/x-component/$npm_package_name.png?v$npm_package_version)](https://travis-ci.org/x-component/$npm_package_name)\" > README.md",
+    "test": "vows ./test/*.test.js"
+  }
 }

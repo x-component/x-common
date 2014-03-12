@@ -112,7 +112,8 @@ suite.addBatch({
 		'Arguments[5] equals [5]' : function(topic){ var x,y; (function(){x=arguments;})(5);y=[5]; assert(topic.equals({a:x},{a:y})); },
 		'true equals true'        : function(topic){ assert(topic.equals(true,true)); },
 		'true not equals false'   : function(topic){ assert(!topic.equals(true,false)); },
-		'"" equals false'         : function(topic){ assert(topic.equals('',false)); }
+		'"" equals false'         : function(topic){ assert(topic.equals('',false)); },
+		'NaN equals NaN'          : function(topic){ assert(topic.equals(NaN,NaN)); }
 	},
 	
 	'prefix': {

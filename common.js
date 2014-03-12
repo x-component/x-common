@@ -334,16 +334,18 @@ x(module.exports, {
 		if ( /Arguments/.test(Object.prototype.toString.call(y)) ) y=Array.prototype.slice.call(y);
 		if ( !strict && x && Array.isArray(x)) x=x.sort();
 		if ( !strict && y && Array.isArray(y)) y=y.sort();
-		if ( typeof x != 'object' && typeof y != 'object' ) return x==y;
+		if ( Number.isNaN(x) && Number.isNaN(y) ) return true;
+		if ( Number.isNaN(x) || Number.isNaN(y) ) return false;
+		if ( typeof x !== 'object' && typeof y !== 'object' ) return strict ? x===y : x==y;
 		if ( strict && x===null && y!==null ) return false;
-		if ( strict && typeof x == 'undefined' && typeof y != 'undefined' ) return false;
+		if ( strict && typeof x === 'undefined' && typeof y !== 'undefined' ) return false;
 		if ( !x && !y ) return true;
 		if ( !x || !y ) return false;
-		if ( (typeof x.equal) == 'function' ) return x.equal(y);
+		if ( (typeof x.equal) === 'function' ) return x.equal(y);
 		if ( x.prototype !== y.prototype ) return false;
-		if ( typeof x != 'object' || typeof y != 'object' ) return x==y;
+		if ( typeof x !== 'object' || typeof y !== 'object' ) return strict ? x===y : x==y;
 		var xk=Object.keys(x),yk=Object.keys(y);
-		if ( xk.length != yk.length) return false;
+		if ( xk.length !== yk.length) return false;
 		for ( var i=xk.length,equal=true,k;i--;)if(!(equal=(((k=xk[i]) in y ) && F(x[k],y[k],strict)))) break;
 		return equal;
 	},

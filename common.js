@@ -346,6 +346,7 @@ x(module.exports, {
 		if ( typeof x !== 'object' || typeof y !== 'object' ) return strict ? x===y : x==y;
 		var xk=Object.keys(x),yk=Object.keys(y);
 		if ( xk.length !== yk.length) return false;
+		if ( (Array.isArray(x) && !Array.isArray(y)) || (!Array.isArray(x) && Array.isArray(y)) ) return false;
 		for ( var i=xk.length,equal=true,k;i--;)if(!(equal=(((k=xk[i]) in y ) && F(x[k],y[k],strict)))) break;
 		return equal;
 	},

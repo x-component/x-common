@@ -440,7 +440,7 @@ x(module.exports, {
 		str = str.replace( /([A-Z][a-z\d]*)/g, '-$1' );
 		if(!splitCapitalSequence) str = str.replace(/([A-Z])\-([A-Z])/g, '$1$2' );
 		str = str.toLowerCase();
-		if( str[0]=='-' ) str = str.substring(1);
+		if( str[0]==='-' ) str = str.substring(1);
 		return str;
 	},
 	
@@ -451,25 +451,36 @@ x(module.exports, {
 	*/
 	property:function( path, merge){
 		
-		path = path.split('.');
+		path = path ? path.split('.') : null;
 		
 		return function(o,value){ // function to get/set object property using the property path
 			
-			for( var i=0,l=path.length; i<l; i++){
+			var	is_set = typeof(value) !== typeof(void 0); // this is a *set* property case
+			
+			if(!path) return is_set ? value : o; // empty path
+			
+			for(var i=0,l=path.length,last=l-1,end=false; o && i<l && !end; i++){
 				
-				var p = path[i];
-				var n = parseInt(p,10);
-				p = isNaN(n)? p : n;
+				var
+					p        = path[i],
+					n        = parseInt(p,10),                   // path elment as a number
+					is_array = !Number.isNaN(n);                 // if path element is a number, we assume it is an array index
 				
-				if(i==l-1 && value !== void 0) {
-					o[p] = merge ? M.merge(o[p],value) : value;
-				}
+				if(is_array) p=n;
 				
-				o= o[p]===void 0 && i < l-1 ? (o[p]=(isNaN(parseInt(path[i+1],10)) ? {} : [] )) : o[p];
+				if(i===last && is_set) o[p] = merge ? M.merge(o[p],value) : value; // set or merge
+				
+				o = (o[p]===void 0 && i < last ? //path component does not exist
+						( is_set ? (o[p]=(Number.isNaN(parseInt(path[i+1],10)) ? {} : [] )) //create & store & use new object or array
+						: (end=true, void 0) // get case: end of loop, return undefined
+						)
+					:o[p]
+					);
 			}
 			return o;
 		};
 	},
+	
 	/*!*
 	 * call node(__filename) to check if the user called node __filename.js
 	 */

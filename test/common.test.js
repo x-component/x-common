@@ -348,6 +348,7 @@ suite.addBatch({
 			var x=function(){},y=function(){};assert.strictEqual(topic.merge(x,y),y);
 		}
 	},
+	
 	'camel2dashed': {
 		topic: common,
 		
@@ -370,6 +371,69 @@ suite.addBatch({
 		
 		'ThisIsCamelCase123getADogID -> this-is-camel-case123get-adog-id'        : function (topic) { assert.equal( topic.camel2dashed('ThisIsCamelCase123getADogID'),'this-is-camel-case123get-adog-id'); },
 		'split ThisIsCamelCase123getADogID -> this-is-camel-case123get-a-dog-i-d': function (topic) { assert.equal( topic.camel2dashed('ThisIsCamelCase123getADogID',true),'this-is-camel-case123get-a-dog-i-d'); }
+	},
+	
+	'property' : {
+		topic : common,
+		'a.b' : { topic: function(topic){ return topic.property('a.b'); },
+			'get undefined     is undefined'         : function(p){ var o=void 0;                    assert.deepEqual(p(o), void 0); assert.deepEqual(o,void 0);                     },
+			'get {}            is undefined'         : function(p){ var o={};                        assert.deepEqual(p(o), void 0); assert.deepEqual(o,{});                         },
+			'get {a:{c:1}      is undefined'         : function(p){ var a,o={a:(a={c:1})};           assert.deepEqual(p(o), void 0); assert.deepEqual(o.a,a);                        },
+			'get {a:[]}        is undefined'         : function(p){ var a,o={a:(a=[])};              assert.deepEqual(p(o), void 0); assert.deepEqual(o.a,a);                        },
+			'get {a:{b:2}      is 2'                 : function(p){ var a,b,o={a:(a={b:(b=2)})};     assert.deepEqual(p(o),b);       assert.deepEqual(o.a,a); assert.equal(o.a.b,b); },
+			'get {a:{b:{c:3}}  is {c:3}'             : function(p){ var a,b,o={a:(a={b:(b={c:3})})}; assert.deepEqual(p(o),b);       assert.deepEqual(o.a,a); assert.equal(o.a.b,b); },
+			'get {a:{b:[4]}    is [4]'               : function(p){ var a,b,o={a:(a={b:(b=[4])})};   assert.deepEqual(p(o),b);       assert.deepEqual(o.a,a); assert.equal(o.a.b,b); },
+			'set undefined,5   is undefiend'         : function(p){ var o=void 0;                    p(o,5); assert.deepEqual(o,void 0);    },
+			'set {},6          is {a:{b:6}}'         : function(p){ var o={};                        p(o,6); assert.deepEqual(o,{a:{b:6}}); },
+			'set [1],7         is [1].a={b:7}}'      : function(p){ var o=[1];                       p(o,7); assert.deepEqual(o.a.b,7); },
+			'set {},{c:8}      is {a:{b:{c:8}}}'     : function(p){ var o={},b={c:8};                p(o,b); assert.equal(o.a.b,b); },
+			'set {},false      is {a:{b:false}}'     : function(p){ var o={},b=false;                p(o,b); assert.equal(o.a.b,b); }
+		},
+		'a.b merge' : { topic: function(topic){ return topic.property('a.b',true); },
+			'merge undefined,5 is undefiend'     : function(p){ var o=void 0;                    p(o,5); assert.deepEqual(o,void 0);    },
+			'merge {},6        is {a:{b:6}}'     : function(p){ var o={};                        p(o,6); assert.deepEqual(o,{a:{b:6}}); },
+			'merge [1],7       is [1].a={b:7}}'  : function(p){ var o=[1];                       p(o,7); assert.deepEqual(o.a.b,7); },
+			'merge {a:{b:{d:9}}},{c:8} is {a:{b:{c:8,d:9}}}' : function(p){ var o={a:{b:{d:9}}}; p(o,{c:8}); assert.deepEqual(o,{a:{b:{c:8,d:9}}}); }
+		},
+		'a.2' : { topic: function(topic){ return topic.property('a.2'); },
+			'get undefined       is undefined'     : function(p){ var o=void 0;                    assert.deepEqual(p(o), void 0); assert.deepEqual(o,void 0);                      },
+			'get {}              is undefined'     : function(p){ var o={};                        assert.deepEqual(p(o), void 0); assert.deepEqual(o,{});                          },
+			'get {a:{c:1}        is undefined'     : function(p){ var a,o={a:(a={c:1})};           assert.deepEqual(p(o), void 0); assert.deepEqual(o.a,a);                         },
+			'get {a:[]}          is undefined'     : function(p){ var a,o={a:(a=[])};              assert.deepEqual(p(o), void 0); assert.deepEqual(o.a,a);                         },
+			'get {a:[0,1,2]      is 2'             : function(p){ var a,x,o={a:(a=[0,1,x=2])};     assert.deepEqual(p(o),x);       assert.deepEqual(o.a,a); assert.equal(o.a[2],x); },
+			'get {a:[0,1,{c:3}]} is {c:3}'         : function(p){ var a,x,o={a:(a=[0,1,x={c:3}])}; assert.deepEqual(p(o),x);       assert.deepEqual(o.a,a); assert.equal(o.a[2],x); },
+			'get {a:[0,1,[4]]}   is [4]'           : function(p){ var a,x,o={a:(a=[0,1,x=[4]])};   assert.deepEqual(p(o),x);       assert.deepEqual(o.a,a); assert.equal(o.a[2],x); },
+			'set {},6            is {a:[,,6]}'     : function(p){ var o={};                        p(o,6); assert.deepEqual(o,{a:[,,6]}); },
+			'set [1],7           is [1].a=[,,7]}'  : function(p){ var o=[1];                       p(o,7); assert.deepEqual(o.a[2],7); },
+			'set {},{c:8}        is {a:[,,{c:8}]}' : function(p){ var o={},x={c:8};                p(o,x); assert.equal(o.a[2],x); }
+		},
+		'1.b' : { topic: function(topic){ return topic.property('1.b'); },
+			'get undefined   is undefined'     : function(p){ var o=void 0;                       assert.deepEqual(p(o), void 0); assert.deepEqual(o,void 0);                       },
+			'get {}          is undefined'     : function(p){ var o={};                           assert.deepEqual(p(o), void 0); assert.deepEqual(o,{});                           },
+			'get []          is undefined'     : function(p){ var o=[];                           assert.deepEqual(p(o), void 0); assert.deepEqual(o,[]);                           },
+			'get [,{c:1}]    is undefined'     : function(p){ var x,o=[void 0,x={c:1}];           assert.deepEqual(p(o), void 0); assert.deepEqual(o[1],x);                         },
+			'get [,[]]       is undefined'     : function(p){ var x,o=[void 0,x=[]];              assert.deepEqual(p(o), void 0); assert.deepEqual(o[1],x);                         },
+			'get [,{b:2]]    is 2'             : function(p){ var x,b,o=[void 0,b={b:(x=2)}];     assert.deepEqual(p(o),x);       assert.deepEqual(o[1],b); assert.equal(o[1].b,x); },
+			'get [,{b:{c:3}] is {c:3}'         : function(p){ var x,b,o=[void 0,b={b:(x={c:3})}]; assert.deepEqual(p(o),x);       assert.deepEqual(o[1],b); assert.equal(o[1].b,x); },
+			'get [,{b:[4]]   is [4]'           : function(p){ var x,b,o=[void 0,b={b:(x=[4])}];   assert.deepEqual(p(o),x);       assert.deepEqual(o[1],b); assert.equal(o[1].b,x); },
+			'set {},6        is {1:{b:6}}'     : function(p){ var o={};                           p(o,6); assert.deepEqual(o,{1:{b:6}}); },
+			'set [1],7       is [1,{b:7}]'     : function(p){ var o=[1];                          p(o,7); assert.deepEqual(o[1].b,7); },
+			'set {},{c:8}    is {1,{b:{c:8}}]' : function(p){ var o={},x={c:8};                   p(o,x); assert.equal(o[1].b,x); }
+		},
+		'a.b.5.d.1' : { topic: function(topic){ return topic.property('a.b.5.d.1'); },
+			'get o={} is undefined':{topic: function(p){ var o={}; assert.deepEqual(p(o),void 0); return o; },
+				'set o,{e:6} is {a:{b:[,,,,,{d:[,{e:6}]}]}}':{
+					topic: function(o,p){
+						var x={e:6}; p(o,x); assert.deepEqual(o,{a:{b:[,,,,,{d:[,x]}]}}); return {x:x,o:o,p:p};
+					},
+					'get o is {e:6}' : function(r){ assert.equal(r.p(r.o),r.x); }
+				}
+			}
+		},
+		'empty path' : { topic: function(topic){ return topic.property(); },
+			'get {a:1}       is {a:1}' : function(p){ assert.deepEqual(p({a:1}),{a:1}); },
+			'set {b:2},{a:1} is {a:1}' : function(p){ assert.deepEqual(p({b:2},{a:1}),{a:1}); }
+		}
 	},
 	
 	'test call once' : {

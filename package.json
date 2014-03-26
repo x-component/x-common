@@ -1,7 +1,9 @@
 {
   "name": "x-common",
   "version": "0.0.5",
-  "license": "MIT",
+  "license": {
+    "type": "MIT"
+  },
   "description": "utilities used by x-x.io x-components",
   "keywords": [
     "x-x",
@@ -15,11 +17,20 @@
   },
   "devDependencies": {
     "vows": "~0.7",
-    "dox-basic": "~0.0"
+    "dox-basic": "~0.0",
+    "projectz": "~0.3"
   },
   "main": "common.js",
   "scripts": {
-    "prepublish": "cat ./common.js | node ./node_modules/dox-basic/bin/dox-basic -m -t \"[![Build Status](https://travis-ci.org/x-component/$npm_package_name.png?v$npm_package_version)](https://travis-ci.org/x-component/$npm_package_name)\" > README.md",
+    "prepublish": "cat ./common.js | node ./node_modules/dox-basic/bin/dox-basic -m -t \"[![Build Status](https://travis-ci.org/x-component/$npm_package_name.png?v$npm_package_version)](https://travis-ci.org/x-component/$npm_package_name)\" > README.md; node ./node_modules/projectz/bin/projectz compile",
     "test": "vows ./test/*.test.js"
+  },
+  "author": "",
+  "maintainers": [
+    ""
+  ],
+  "contributors": [],
+  "bugs": {
+    "url": "https://github.com/x-component/x-common/issues"
   }
 }

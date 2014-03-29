@@ -17,12 +17,11 @@
   },
   "devDependencies": {
     "vows": "~0.7",
-    "dox-basic": "~0.0",
-    "projectz": "~0.3"
+    "x-publish": "~0.0"
   },
   "main": "common.js",
   "scripts": {
-    "prepublish": "./scripts/prepublish.sh common.js",
+    "prepublish": "./node_modules/x-publish/prepublish.sh common.js",
     "test": "vows ./test/*.test.js"
   },
   "author": "",

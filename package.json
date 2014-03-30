@@ -31,5 +31,16 @@
   "contributors": [],
   "bugs": {
     "url": "https://github.com/x-component/x-common/issues"
+  },
+  "testling": {
+    "harness": "mocha-tdd",
+    "files": "test/*.tdd.test.js",
+    "browsers": [
+      "ie/8..latest",
+      "chrome/latest",
+      "firefox/latest",
+      "iphone/latest",
+      "android-browser/latest"
+    ]
   }
 }

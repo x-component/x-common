@@ -1,0 +1,6 @@
+ui: mocha-tdd
+browsers:
+  - name: android
+    version: latest
+  - name: safari
+    version: latest

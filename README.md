@@ -75,6 +75,11 @@ To delete a property in a merge you can use a sepcial object as source: merge.re
 @return {target}  The modified target   
 
 
+isNaN(value)
+-----------
+replacement for Number.isNaN as long as not all support this
+
+
 flatten( object )
 ---------
 

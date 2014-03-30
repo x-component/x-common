@@ -1,7 +1,7 @@
 'use strict';
 
 var M = module.exports = {
-
+	
 /*
 x-common
 ========
@@ -51,7 +51,8 @@ This module contains some helper functions
 			for (var p in s) if(s.hasOwnProperty(p)) t[p] = s[p];
 		}
 		return t;
-	}
+	},
+	
 };
 
 // shortcut to write x instead of extend
@@ -206,6 +207,17 @@ x(module.exports, {
 	}),
 	
 	/**
+	 * isNaN(value)
+	 * -----------
+	 * replacement for Number.isNaN as long as not all support this
+	 */
+	isNaN:function(value){
+		return Number.isNaN && Number.isNaN(value) ||  (typeof value === 'number' && isNaN(value));
+	},
+	
+	
+	
+	/**
 	 * flatten( object )
 	 * ---------
 	 *
@@ -334,8 +346,8 @@ x(module.exports, {
 		if ( /Arguments/.test(Object.prototype.toString.call(y)) ) y=Array.prototype.slice.call(y);
 		if ( !strict && x && Array.isArray(x)) x=x.sort();
 		if ( !strict && y && Array.isArray(y)) y=y.sort();
-		if ( Number.isNaN(x) && Number.isNaN(y) ) return true;
-		if ( Number.isNaN(x) || Number.isNaN(y) ) return false;
+		if ( M.isNaN(x) && M.isNaN(y) ) return true;
+		if ( M.isNaN(x) || M.isNaN(y) ) return false;
 		if ( typeof x !== 'object' && typeof y !== 'object' ) return strict ? x===y : x==y;
 		if ( strict && x===null && y!==null ) return false;
 		if ( strict && typeof x === 'undefined' && typeof y !== 'undefined' ) return false;
@@ -464,14 +476,14 @@ x(module.exports, {
 				var
 					p        = path[i],
 					n        = parseInt(p,10),                   // path elment as a number
-					is_array = !Number.isNaN(n);                 // if path element is a number, we assume it is an array index
+					is_array = !M.isNaN(n);                 // if path element is a number, we assume it is an array index
 				
 				if(is_array) p=n;
 				
 				if(i===last && is_set) o[p] = merge ? M.merge(o[p],value) : value; // set or merge
 				
 				o = (o[p]===void 0 && i < last ? //path component does not exist
-						( is_set ? (o[p]=(Number.isNaN(parseInt(path[i+1],10)) ? {} : [] )) //create & store & use new object or array
+						( is_set ? (o[p]=(M.isNaN(parseInt(path[i+1],10)) ? {} : [] )) //create & store & use new object or array
 						: (end=true, void 0) // get case: end of loop, return undefined
 						)
 					:o[p]

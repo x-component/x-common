@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/x-component/x-common.png?v0.0.9)](https://travis-ci.org/x-component/x-common)
+[![Build Status](https://travis-ci.org/x-component/x-common.png?v0.0.10)](https://travis-ci.org/x-component/x-common)
 =======================================================================================================
 
 

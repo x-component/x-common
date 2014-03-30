@@ -1,4 +1,16 @@
 language: node_js
 node_js:
-  - "0.10"
-  - "0.11"
+- '0.10'
+- '0.11'
+deploy:
+  provider: npm
+  email: maurice.schoenmakers@x-x.io
+  api_key:
+    secure: ivEKbrIhFYfrX6dearIsRDHmRN9KKyKwZP7y3LuLmCofnkpHwCiU4KX2a22X3M0DTtQ1uwYHybUg5CmegtNQi9NtV+/ZImoyMlpcQl1ha4/KB+JN2sQzVwlZUUSNumc3iyK6S9+YSJXAI1e6vxJuOnICNDi6v8rlAxtQjFgrPzY=
+  on:
+    tags: true
+    repo: x-component/x-common
+env:
+  global:
+  - secure: EdGGuKrTKJS0r4BmShT4WVR53AIkttVhHxE3tNhLXxwitjKKGGsvIRbZ5eqyKo6gQrWJY51RSYD+5qmmslpl/dsza0aeHDYZlte29e2s7eUgRZt+8u1Uu7do7Q4aTjSP6zZJajJMXVN3T9krSwVxEpvFbyrCF03psBNuB96IAUA=
+  - secure: dmkpT6F3DWwQVk7aGHWOBV2jP1c0UX7AUNvq7VIFLHdMHTMcyvb2nplBOLai7BsmKV3M72dnBO63JhoyuhnG+TUz0TTE6YKSWPhABZhtLNB5ZUvhQA9z99IJgW0VQfVZjovKywiz51Ux1EX42uc+Vpg1sx5cR0zwNYL5Rfy2qcM=

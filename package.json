@@ -16,13 +16,13 @@
     "url": "https://github.com/x-component/x-common.git"
   },
   "devDependencies": {
-    "vows": "~0.7",
-    "x-publish": "~0.0"
+    "x-publish": "~0.0",
+    "x-test": "~0.0"
   },
   "main": "common.js",
   "scripts": {
-    "prepublish": "./node_modules/x-publish/prepublish.sh common.js",
-    "test": "vows ./test/*.test.js"
+    "prepublish": "./node_modules/x-publish/scripts/prepublish.sh common.js",
+    "test": "./node_modules/x-test/scripts/test.sh ./test"
   },
   "author": "",
   "maintainers": [

@@ -1,12 +1,11 @@
 'use strict';
 
+require('x-test').vows(suite,test,suiteSetup); // support mixing with vows like tests
+
 var
-	vows   = require('vows'),
 	assert = require('assert'),
 	common = require('../common');
 
-
-var suite = vows.describe('common');
 suite.addBatch({
 	
 	'extend': {
@@ -119,7 +118,7 @@ suite.addBatch({
 	
 	'prefix': {
 		topic: common,
-		'prefix "" equals ""'                                   :function(topic){ assert.equal(topic.prefix(''),''); },
+		'prefix "" equals ""'                                   : function(topic){ assert.equal(topic.prefix(''),''); },
 		'prefix "xya","xyb","xyxc" equals "xy"'                 : function(topic){ assert.equal(topic.prefix('xya','xyb','xyxc'),'xy'); },
 		'prefix "axy","bxy","cyxy" equals ""'                   : function(topic){ assert.equal(topic.prefix('axy','bxy','cyxy'),''); },
 		'prefix "xya","xyxc","xyb" equals "xy"'                 : function(topic){ assert.equal(topic.prefix('xya','xyxc','xyb'),'xy'); },
@@ -307,7 +306,7 @@ suite.addBatch({
 			var x=[1,{},2],y=1;assert.deepEqual(topic.merge(x,y),[1,{},2]);assert.strictEqual(topic.merge(x,y),x);
 		},
 		'array and object is same array with deep copied object appended': function (topic) {
-			var x=[{},2,3],y={a:1};assert.deepEqual(topic.merge(x,y),[{},2,3,{a:1}]);assert.notStrictEqual(topic.merge(x,y)[3],y);;
+			var x=[{},2,3],y={a:1};assert.deepEqual(topic.merge(x,y),[{},2,3,{a:1}]);assert.notStrictEqual(topic.merge(x,y)[3],y);
 		},
 		'array with object and deep equal object is same array': function (topic) {
 			var x=[{a:1},2,3],y={a:1};assert.deepEqual(topic.merge(x,y),[{a:1},2,3]);assert.strictEqual(topic.merge(x,y),x);
@@ -324,7 +323,7 @@ suite.addBatch({
 			assert.strictEqual(topic.merge(x,y)[0],x[0]);
 		},
 		'array and function is same array with function appended (can not copy function)': function (topic) {
-			var x=[{},2,3],y=function(){};assert.deepEqual(topic.merge(x,y),[{},2,3,y]);assert.strictEqual(topic.merge(x,y)[3],y);;
+			var x=[{},2,3],y=function(){};assert.deepEqual(topic.merge(x,y),[{},2,3,y]);assert.strictEqual(topic.merge(x,y)[3],y);
 		},
 		'array with function and same function is same array': function (topic) {
 			var y,x=[(y=function(){}),{},2];assert.deepEqual(topic.merge(x,y),[y,{},2]);assert.strictEqual(topic.merge(x,y)[0],y);assert.strictEqual(topic.merge(x,y),x);
@@ -458,4 +457,4 @@ suite.addBatch({
 			}
 		}
 	}
-}).export(module,{error:false});
+});

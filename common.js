@@ -51,8 +51,7 @@ This module contains some helper functions
 			for (var p in s) if(s.hasOwnProperty(p)) t[p] = s[p];
 		}
 		return t;
-	},
-	
+	}
 };
 
 // shortcut to write x instead of extend

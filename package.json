@@ -1,6 +1,6 @@
 {
   "name": "x-common",
-  "version": "0.0.11",
+  "version": "1.0.0",
   "license": {
     "type": "MIT"
   },
@@ -16,13 +16,14 @@
     "url": "https://github.com/x-component/x-common.git"
   },
   "devDependencies": {
-    "x-publish": "~0.0",
-    "x-test": "~0.0"
+    "x-publish": "1.x.x",
+    "x-test": "1.x.x"
   },
+  "browser": "common.js",
   "main": "common.js",
   "scripts": {
-    "prepublish": "./node_modules/x-publish/scripts/prepublish.sh common.js",
-    "test": "./node_modules/x-test/scripts/test.sh ./test"
+    "prepublish": "$(npm bin)/x-publish",
+    "test": "$(npm bin)/x-test ./test"
   },
   "author": "",
   "maintainers": [
@@ -36,7 +37,7 @@
     "harness": "mocha-tdd",
     "files": "test/*.tdd.test.js",
     "browsers": [
-      "ie/8..latest",
+      "ie/latest",
       "chrome/latest",
       "firefox/latest",
       "iphone/latest",

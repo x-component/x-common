@@ -1,10 +1,12 @@
 'use strict';
 
-require('x-test').vows(suite,test,suiteSetup); // support mixing with vows like tests
+require('x-test').vows(suite,test,suiteSetup,suiteTeardown); // support mixing tdd with vows like tests
 
 var
 	assert = require('assert'),
 	common = require('../common');
+
+suite('common',function(){
 
 suite.addBatch({
 	
@@ -457,4 +459,6 @@ suite.addBatch({
 			}
 		}
 	}
+});
+
 });
